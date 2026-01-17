@@ -2,6 +2,12 @@
 
 **Proyecto 5 - Módulo 2: Análisis con Python**
 
+---
+
+**Marie Curie exploró lo invisible: la radiactividad, esa energía oculta en la materia. El análisis exploratorio avanzado es así: bucear en profundidades, detectar señales débiles, intuir relaciones que no saltan a la vista. Requiere rigor, paciencia y esa valentía científica que Marie encarnó. Aquí los datos revelan sus secretos más íntimos.**
+
+---
+
 Este satélite integra todo lo aprendido en un **Análisis Exploratorio de Datos (EDA)** completo y profesional. Aplicarás Python, estadística, visualización y pensamiento analítico para entender datasets del mundo real.
 
 ## 🎯 Objetivos del proyecto
