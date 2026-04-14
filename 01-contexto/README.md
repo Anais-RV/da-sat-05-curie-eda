@@ -15,7 +15,34 @@ pip install numpy pandas matplotlib seaborn scipy
 Genera reportes HTML automáticos con EDA completo.
 
 ```bash
-pip install ydata-profiling
+pip install ydata-profiling setuptools
+```
+
+**Nota importante (Python 3.12+):**
+
+`ydata-profiling` no está deprecada, pero algunas versiones/dependencias siguen usando `pkg_resources`.
+Como en varios entornos de Python 3.12+ no viene `setuptools` por defecto, puede aparecer:
+
+```text
+ModuleNotFoundError: No module named 'pkg_resources'
+```
+
+**Solución rápida (primera opción):**
+
+```bash
+pip install --upgrade setuptools
+```
+
+Si el error persiste (caso observado en algunos entornos Python 3.13), fija una versión compatible de setuptools:
+
+```bash
+pip install "setuptools==80.9.0"
+```
+
+Luego vuelve a probar:
+
+```python
+from ydata_profiling import ProfileReport
 ```
 
 **Uso:**
@@ -190,6 +217,8 @@ import missingno as msno
 
 print("✅ Todas las librerías cargadas correctamente")
 ```
+
+Si falla la importación de `ydata_profiling` con error de `pkg_resources`, instala/actualiza `setuptools`, y si no se resuelve fija `setuptools==80.9.0`; después reinicia el kernel.
 
 ---
 

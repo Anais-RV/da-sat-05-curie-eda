@@ -58,12 +58,24 @@ import sweetviz as sv              # EDA visual automatizado
 
 ## 📊 Dataset del proyecto
 
-Trabajarás con datos reales de **e-commerce** (tienda online):
+Usaremos un dataset de e-commerce típico de proyecto real.
 
-- **Clientes:** ID, edad, género, ubicación, fecha de registro
-- **Productos:** Categoría, precio, marca, stock
-- **Transacciones:** Fecha, monto, cantidad, método de pago
-- **Comportamiento:** Visitas, clics, conversión, abandono
+### Opción recomendada (Kaggle)
+
+- **Dataset:** Brazilian E-Commerce Public Dataset by Olist
+- **Enlace:** https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
+
+Tablas principales que puedes analizar:
+
+- **Clientes:** ubicación y perfil de compra
+- **Órdenes:** fechas, estado y ciclo de compra
+- **Items/Productos:** categorías, precio y flete
+- **Pagos:** método y valor pagado
+- **Reseñas:** satisfacción del cliente
+
+### Opción alternativa (si no puedes descargar Kaggle)
+
+En la carpeta de práctica guiada tienes una versión simulada para hacer el flujo EDA completo sin bloquearte.
 
 **Objetivo:** Entender patrones de compra, segmentar clientes y encontrar oportunidades de negocio.
 
@@ -154,7 +166,7 @@ En el proyecto de e-commerce:
 
 ```python
 # 1. Cargar
-df = pd.read_csv('datos.csv')
+df = pd.read_csv('ruta/a/tu/dataset.csv')
 
 # 2. Explorar
 df.head()

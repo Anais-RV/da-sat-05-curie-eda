@@ -7,6 +7,24 @@
 
 ---
 
+## 🧭 Ruta de sesión (numeración de clase)
+
+Para evitar confusiones, en esta sesión usamos esta numeración fija:
+
+1. **Contexto y casos de uso** (por qué scraping)
+2. **Setup técnico** (requests, BeautifulSoup, parser)
+3. **Flujo base de scraping** (descargar, parsear, buscar, extraer)
+4. **Extracción y limpieza** (texto, atributos, normalización)
+5. **Ética y límites** (robots.txt, términos, ritmo de requests)
+6. **Práctica guiada**
+    - **6.1** Básico: Wikipedia
+    - **6.2** Paginación: múltiples páginas
+    - **6.3** Mini-proyecto: scraping + EDA
+
+> Nota: Los `PASO 1..5` dentro de los snippets son pasos de código, no el orden global de la clase.
+
+---
+
 ## ¿Por qué Web Scraping?
 
 Muchos datos valiosos están en páginas web, no en archivos descargables:
@@ -247,25 +265,31 @@ for url in urls:
 
 ---
 
-## 🎯 Ejercicio práctico 1: Scraping básico (45 min)
+## 🎯 Bloque práctico 6.1: Scraping básico (45 min)
 
 **Ver archivo:** `ejercicio_1_scraping_basico.py`
+
+**Versión guiada en notebook:** `ejercicio_1_scraping_basico.ipynb`
 
 Extraerás datos de una tabla de Wikipedia usando BeautifulSoup.
 
 ---
 
-## 🎯 Ejercicio práctico 2: Múltiples páginas (45 min)
+## 🎯 Bloque práctico 6.2: Múltiples páginas (45 min)
 
 **Ver archivo:** `ejercicio_2_paginacion.py`
+
+**Versión guiada en notebook:** `ejercicio_2_paginacion.ipynb`
 
 Aprenderás a extraer datos de múltiples páginas (paginación).
 
 ---
 
-## 🎯 Ejercicio práctico 3: Proyecto real (60 min)
+## 🎯 Bloque práctico 6.3: Proyecto real (60 min)
 
 **Ver archivo:** `ejercicio_3_proyecto_real.py`
+
+**Versión guiada en notebook:** `ejercicio_3_proyecto_real.ipynb`
 
 Proyecto completo: extraer datos, limpiar, analizar y visualizar.
 

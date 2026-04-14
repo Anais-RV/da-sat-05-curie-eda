@@ -246,19 +246,15 @@ EDA sin pregunta de negocio es turismo de datos. Define:
 - ¿Qué problema resolver?
 - ¿Qué decisión tomar con los insights?
 
-## Estructura de este proyecto
+## Estructura del satélite
 
-```
-00-bienvenida/       ← Estás aquí
-01-contexto/         → Herramientas técnicas
-02-carga-datos/      → Leer CSV, Excel, JSON
-03-limpieza/         → Nulos, duplicados, outliers
-04-univariado/       → Variable por variable
-05-bivariado/        → Relaciones entre pares
-06-visualizacion/    → Gráficos avanzados
-07-practica/         → EDA completo de e-commerce
-08-bitacora/         → Tu diario de descubrimientos
-```
+La estructura completa está en el README principal del satélite:
+
+- `../README.md`
+
+Siguiente paso recomendado desde aquí:
+
+- `../01-contexto/README.md`
 
 ## Mentalidad final
 

@@ -1,6 +1,47 @@
 # 🎯 Práctica Guiada: EDA Completo de E-commerce
 
-## Dataset simulado
+## Ruta recomendada de trabajo
+
+1. Ejecuta primero el notebook guiado: `eda_curie_guiado.ipynb`
+2. Después adapta el flujo a tu dataset (Kaggle o simulado)
+3. Cierra con 3 insights accionables y exportación de resultados
+
+## Dónde colocar el dataset (ruta única)
+
+Para que todo el grupo trabaje igual, usa esta ruta:
+
+- `07-practica-guiada/data/olist/`
+
+Guía de archivos esperados en:
+
+- `07-practica-guiada/data/README.md`
+
+## Opción A (recomendada): Dataset de Kaggle
+
+Si quieres trabajar con un caso más realista, usa:
+
+- Brazilian E-Commerce Public Dataset by Olist
+- https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce
+
+Sugerencia de arranque:
+
+```python
+import pandas as pd
+
+clientes = pd.read_csv('olist_customers_dataset.csv')
+ordenes = pd.read_csv('olist_orders_dataset.csv')
+items = pd.read_csv('olist_order_items_dataset.csv')
+pagos = pd.read_csv('olist_order_payments_dataset.csv')
+productos = pd.read_csv('olist_products_dataset.csv')
+
+df = items.merge(ordenes, on='order_id', how='left') \
+          .merge(pagos.groupby('order_id', as_index=False)['payment_value'].sum(), on='order_id', how='left') \
+          .merge(productos[['product_id', 'product_category_name']], on='product_id', how='left')
+
+df.head()
+```
+
+## Opción B: Dataset simulado (rápido para practicar)
 
 ```python
 import pandas as pd
