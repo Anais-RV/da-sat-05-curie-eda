@@ -19,7 +19,7 @@ print("="*60)
 # PASO 1: DESCARGAR LA PÁGINA
 # =============================================================================
 
-url = 'https://es.wikipedia.org/wiki/Anexo:Capitales_de_pa%C3%ADses'
+url = 'https://es.wikipedia.org/wiki/Anexo:Capitales_de_Estado'
 
 print(f"\n🌐 Descargando página...")
 print(f"URL: {url}")
@@ -27,7 +27,11 @@ print(f"URL: {url}")
 try:
     # Headers para simular un navegador
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        'User-Agent': (
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+            'AppleWebKit/537.36 (KHTML, like Gecko) '
+            'Chrome/124.0.0.0 Safari/537.36'
+        )
     }
     
     response = requests.get(url, headers=headers)
@@ -50,11 +54,18 @@ try:
     
     print(f"\n📊 Buscando tablas...")
     
-    # Buscar todas las tablas de clase 'wikitable'
-    tablas = soup.find_all('table', class_='wikitable')
-    print(f"✅ Se encontraron {len(tablas)} tablas")
-    
-    # Seleccionar la primera tabla
+    # Wikipedia puede usar clases distintas segun la pagina/version.
+    # Intentamos primero clases comunes y, si no, usamos la primera tabla util.
+    tablas = soup.find_all('table', class_=['wikitable', 'sortable'])
+    if not tablas:
+        tablas = soup.find_all('table')
+
+    print(f"✅ Se encontraron {len(tablas)} tablas candidatas")
+
+    if not tablas:
+        raise ValueError("No se encontraron tablas en la pagina")
+
+    # Seleccionar la primera tabla candidata
     tabla = tablas[0]
     print(f"   Tabla seleccionada: {tabla.get('class')}")
     
@@ -65,9 +76,17 @@ try:
     print(f"\n📋 Extrayendo cabeceras...")
     
     cabeceras = []
-    primera_fila = tabla.find('tr')
-    for th in primera_fila.find_all('th'):
-        cabeceras.append(th.text.strip())
+
+    # La primera fila puede venir vacia o con iconos de ordenacion.
+    # Buscamos la primera fila que tenga 4 columnas de texto legibles.
+    for fila in tabla.find_all('tr'):
+        posibles = [c.get_text(' ', strip=True).split('[')[0].strip() for c in fila.find_all(['td', 'th'])]
+        if len(posibles) == 4 and all(posibles):
+            cabeceras = posibles
+            break
+
+    if not cabeceras:
+        cabeceras = ['Entidad', 'Capital', 'Continente', 'Habitantes']
     
     print(f"✅ Cabeceras encontradas:")
     for i, cab in enumerate(cabeceras, 1):
@@ -80,20 +99,22 @@ try:
     print(f"\n💾 Extrayendo filas de datos...")
     
     filas_datos = []
-    filas = tabla.find_all('tr')[1:]  # Saltar cabecera
+    filas = tabla.find_all('tr')
     
     for i, fila in enumerate(filas, 1):
         celdas = fila.find_all(['td', 'th'])
         
-        if len(celdas) > 0:
+        if len(celdas) == 4:
             fila_datos = []
             for celda in celdas:
-                texto = celda.text.strip()
+                texto = celda.get_text(' ', strip=True)
                 # Limpiar referencias de Wikipedia [1], [2], etc.
-                texto = texto.split('[')[0]
+                texto = texto.split('[')[0].strip()
                 fila_datos.append(texto)
-            
-            filas_datos.append(fila_datos)
+
+            # Evitar meter la fila de cabeceras como dato
+            if fila_datos != cabeceras:
+                filas_datos.append(fila_datos)
         
         # Progreso cada 50 filas
         if i % 50 == 0:
@@ -138,9 +159,13 @@ try:
     df.to_csv('capitales_paises.csv', index=False, encoding='utf-8')
     print(f"✅ CSV guardado: capitales_paises.csv")
     
-    # Guardar Excel
-    df.to_excel('capitales_paises.xlsx', index=False)
-    print(f"✅ Excel guardado: capitales_paises.xlsx")
+    # Guardar Excel (opcional si openpyxl está disponible)
+    try:
+        df.to_excel('capitales_paises.xlsx', index=False)
+        print(f"✅ Excel guardado: capitales_paises.xlsx")
+    except ImportError:
+        print("⚠️ No se pudo guardar Excel: falta 'openpyxl' en el entorno")
+        print("   Instala con: pip install openpyxl")
     
     # Guardar HTML
     df.head(50).to_html('capitales_top50.html', index=False)

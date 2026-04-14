@@ -170,15 +170,25 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 # 1. Descargar página
-url = 'https://es.wikipedia.org/wiki/Anexo:Capitales_de_pa%C3%ADses'
-response = requests.get(url)
+url = 'https://es.wikipedia.org/wiki/Anexo:Capitales_de_Estado'
+headers = {
+    'User-Agent': (
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) '
+        'AppleWebKit/537.36 (KHTML, like Gecko) '
+        'Chrome/124.0.0.0 Safari/537.36'
+    )
+}
+response = requests.get(url, headers=headers, timeout=20)
+response.raise_for_status()
 html = response.text
 
 # 2. Parsear HTML
 soup = BeautifulSoup(html, 'html.parser')
 
-# 3. Encontrar la tabla (buscar por clase)
-tabla = soup.find('table', class_='wikitable')
+# 3. Encontrar la tabla (Wikipedia puede usar 'wikitable' o 'sortable')
+tabla = soup.find('table', class_=['wikitable', 'sortable'])
+if tabla is None:
+    tabla = soup.find('table')
 
 # 4. Extraer cabeceras
 cabeceras = []
